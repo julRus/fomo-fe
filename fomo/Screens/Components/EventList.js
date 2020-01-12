@@ -4,7 +4,9 @@ import {
   View,
   Text,
   TouchableOpacity,
-  FlatList
+  FlatList,
+  ImageBackground,
+  Image
 } from "react-native";
 import * as api from "../../api";
 
@@ -14,7 +16,7 @@ export default function EventList(props) {
 
   useEffect(() => {
     api.fetchSkiddleEvents().then(data => {
-      const { keywords } = props;
+      const { keywords, ageRange } = props;
       const { results } = data;
       const eventsByKeywords = results.filter(event => {
         if (
@@ -31,6 +33,10 @@ export default function EventList(props) {
     });
   });
 
+  function viewEvent(id) {
+    props.navigator("Event", { id });
+  }
+
   if (isLoading)
     return (
       <View style={styles.container}>
@@ -42,26 +48,41 @@ export default function EventList(props) {
       <FlatList
         data={skiddleEvents}
         renderItem={({ item }) => (
-          <TouchableOpacity key={item.id}>
+          <TouchableOpacity key={item.id} onPress={() => viewEvent(item.id)}>
             <View style={styles.events} key={item.id}>
-              <Text style={styles.eventText}>
-                {new Date(item.date).toDateString()}
-              </Text>
-              <Text style={styles.eventText}>{item.EventCode}</Text>
-              <Text style={styles.eventText}>
-                {item.openingtimes.doorsopen} - {item.openingtimes.doorsclose}
-              </Text>
-              <Text style={styles.eventText}>{item.eventname}</Text>
-              <Text style={styles.eventText}>
-                {item.venue.name}, {item.venue.address}, {item.venue.town},{" "}
-                {item.venue.postcode}
-              </Text>
-              <Text style={styles.eventText}>
-                {item.entryprice === "0.00" ? "Free" : `£${item.entryprice}`}
-              </Text>
-              <Text style={styles.eventText}>
-                {item.minage ? "All" : `${item.minage}+`}
-              </Text>
+              <ImageBackground
+                style={{
+                  width: "100%",
+                  height: 100,
+                  opacity: 0.7
+                }}
+                source={{ uri: item.largeimageurl }}
+                blurRadius={3}
+              >
+                <Image
+                  style={{
+                    width: 100,
+                    height: 100,
+                    alignSelf: "flex-end",
+                    position: "absolute"
+                  }}
+                  source={{ uri: item.imageurl }}
+                ></Image>
+                <Text style={styles.eventDate}>
+                  {new Date(item.date).toDateString()},{" "}
+                  {item.openingtimes.doorsopen} - {item.openingtimes.doorsclose}
+                </Text>
+                <Text style={styles.eventName}>{item.eventname}</Text>
+                <Text style={styles.eventLocation}>
+                  {item.venue.name}, {item.venue.postcode}
+                </Text>
+                <Text style={styles.eventPrice}>
+                  {item.entryprice === "0.00" ? "Free" : `${item.entryprice}`}
+                </Text>
+                <Text style={styles.eventAgeRange}>
+                  {item.minage ? "All" : `${item.minage}+`}
+                </Text>
+              </ImageBackground>
             </View>
           </TouchableOpacity>
         )}
@@ -82,11 +103,31 @@ const styles = StyleSheet.create({
     textAlign: "center",
     top: -40
   },
-  events: {
-    marginVertical: 10
+  eventDate: {
+    color: "white",
+    fontSize: 10,
+    textAlign: "center"
   },
-
-  eventText: {
-    color: "white"
+  eventName: {
+    color: "white",
+    fontSize: 15,
+    paddingRight: 135,
+    textAlign: "right"
+  },
+  eventLocation: {
+    color: "white",
+    textAlign: "right",
+    right: 135
   }
+  // eventAgeRange: {
+  //   color: "white",
+  //   fontSize: 20,
+  //   textAlign: "right",
+  //   backgroundColor: "black",
+  //   opacity: 0.7
+  // },
+  // eventPrice: {
+  //   color: "white",
+  //   top: 20
+  // }
 });

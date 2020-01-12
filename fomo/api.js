@@ -11,3 +11,13 @@ export const fetchSkiddleEvents = (
       return data;
     });
 };
+
+export const fetchEventByEventId = id => {
+  return axios
+    .get(
+      `https://www.skiddle.com/api/v1/events/${id}/?api_key=2c674154bb766482be163c00831f88c8&latitude`
+    )
+    .then(({ data }) => {
+      return data;
+    });
+};

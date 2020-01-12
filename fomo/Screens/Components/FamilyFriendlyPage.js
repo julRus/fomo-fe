@@ -11,6 +11,7 @@ import {
 export default function FamilyFriendlyPage(props) {
   return (
     <Modal style={styles.container} visible={props.view} animationType="fade">
+      <Text style={styles.background}></Text>
       <Text style={styles.title}>
         Would you like to include family friendly events in your feed?
       </Text>
@@ -20,14 +21,14 @@ export default function FamilyFriendlyPage(props) {
             <Button
               title="Yes"
               color="hotpink"
-              onPress={() => props.confirm(true)}
+              onPress={() => props.confirm("<")}
             />
           </View>
           <View style={styles.button}>
             <Button
               title="No"
               color="grey"
-              onPress={() => props.confirm(false)}
+              onPress={() => props.confirm(">")}
             />
           </View>
         </View>
@@ -49,10 +50,16 @@ const styles = StyleSheet.create({
     opacity: 0.8
   },
 
+  background: {
+    backgroundColor: "black",
+    height: "100%",
+    width: "100%",
+    position: "absolute"
+  },
+
   title: {
     fontSize: 20,
-    margin: 0,
-    padding: 0,
+    marginTop: 260,
     color: "white",
     textAlign: "center"
   },
@@ -61,11 +68,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     justifyContent: "space-evenly",
-    marginTop: 20
+    marginTop: 30
   },
   button: {
     width: 120,
-    textAlign: "center",
-    marginHorizontal: 30
+    textAlign: "center"
   }
 });

@@ -10,12 +10,9 @@ import {
 
 export default function ConfirmInterests(props) {
   return (
-    <View>
-      <Modal
-        style={styles.container}
-        visible={props.view}
-        animationType="slide"
-      >
+    <View style={styles.container}>
+      <Modal visible={props.view} animationType="slide">
+        <Text style={styles.background}></Text>
         <Text style={styles.title}>Confirm these interests?</Text>
         <TouchableOpacity>
           <View style={styles.buttonContainer}>
@@ -42,17 +39,22 @@ const styles = StyleSheet.create({
     margin: 20,
     top: 70,
     elevation: 20,
-    backgroundColor: "black",
     paddingVertical: 180,
     paddingHorizontal: 50,
     borderRadius: 6,
     opacity: 0.8
   },
 
+  background: {
+    backgroundColor: "black",
+    height: "100%",
+    width: "100%",
+    position: "absolute"
+  },
+
   title: {
     fontSize: 20,
-    margin: 0,
-    padding: 0,
+    marginTop: 260,
     color: "white",
     textAlign: "center"
   },
@@ -61,11 +63,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     justifyContent: "space-evenly",
-    marginTop: 20
+    marginTop: 30
   },
   button: {
     width: 120,
-    textAlign: "center",
-    marginHorizontal: 30
+    textAlign: "center"
   }
 });

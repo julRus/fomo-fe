@@ -6,6 +6,7 @@ import { createStackNavigator } from "react-navigation-stack";
 import HomeScreen from "./Screens/HomePage";
 import SignUp from "./Screens/SignUp";
 import MainPage from "./Screens/MainPage";
+import Event from "./Screens/Event";
 
 class Home extends React.Component {
   render() {
@@ -17,6 +18,8 @@ class Home extends React.Component {
             height: "100%"
           }}
           source={require("./assets/bg.jpg")}
+          resizeMode="cover"
+          blurRadius={2}
         >
           <HomeScreen navigator={this.props.navigation.navigate} />
         </ImageBackground>
@@ -28,7 +31,8 @@ class Home extends React.Component {
 const RootStack = createStackNavigator({
   Home: Home,
   SignUp: SignUp,
-  MainPage: MainPage
+  MainPage: MainPage,
+  Event: Event
 });
 
 const AppContainer = createAppContainer(RootStack);

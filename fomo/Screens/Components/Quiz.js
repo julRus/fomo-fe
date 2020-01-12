@@ -20,7 +20,7 @@ export default function Quiz(props) {
   const [keywords, setKeywords] = useState(items);
   const [viewConfirmPage, setViewConfirmPage] = useState(false);
   const [viewFamilyFriendlyPage, setViewFamilyFriendlyPage] = useState(false);
-  const [familyFriendly, setFamilyFriendly] = useState(false);
+  const [familyFriendly, setFamilyFriendly] = useState();
 
   useEffect(() => {
     setInterests(arrayOfInterests);
@@ -58,12 +58,16 @@ export default function Quiz(props) {
     setViewFamilyFriendlyPage(true);
   }
 
-  function navToMainPage(bool) {
-    setFamilyFriendly(bool);
+  function navToMainPage(ageRange) {
+    setFamilyFriendly(ageRange);
     setViewConfirmPage(false);
     setViewFamilyFriendlyPage(false);
     props.navigate(false);
-    props.navigator("MainPage", { keywords, familyFriendly });
+    props.navigator("MainPage", {
+      keywords,
+      familyFriendly,
+      navigator: props.navigator
+    });
   }
 
   return (
@@ -80,8 +84,6 @@ export default function Quiz(props) {
               style={{
                 opacity: item.opacity,
                 flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
                 height: 210,
                 margin: 5
               }}
@@ -115,15 +117,12 @@ export default function Quiz(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    backgroundColor: "black",
     paddingBottom: 60
   },
   title: {
     color: "white",
     fontSize: 20,
     width: "100%",
-    height: "10%",
     justifyContent: "center",
     textAlign: "center",
     backgroundColor: "black"
@@ -134,7 +133,6 @@ const styles = StyleSheet.create({
   button: {
     height: 230,
     width: 200,
-    alignItems: "center",
     marginTop: 10,
     backgroundColor: "black",
     opacity: 0.5,
@@ -152,6 +150,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     justifyContent: "center",
     textAlign: "center",
-    color: "#fff"
+    color: "white"
   }
 });

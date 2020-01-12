@@ -20,13 +20,13 @@ export default arrayOfInterests = [
     opacity: 1
   },
   {
-    key: "PUB",
+    key: "BARPUB",
     img: require("../../assets/alcohol.jpg"),
     opacity: 1
   },
   {
-    key: "BARPUB",
-    img: require("../../assets/food.jpg"),
+    key: "DATE",
+    img: require("../../assets/date.jpg"),
     opacity: 1
   },
   {
@@ -55,8 +55,18 @@ export default arrayOfInterests = [
     opacity: 1
   },
   {
-    key: "GAMES",
-    img: require("../../assets/games.jpg"),
+    key: "EXHIB",
+    img: require("../../assets/exhibit.jpg"),
+    opacity: 1
+  },
+  {
+    key: "KIDS",
+    img: require("../../assets/kids.jpg"),
+    opacity: 1
+  },
+  {
+    key: "LGB",
+    img: require("../../assets/lgb.jpg"),
     opacity: 1
   }
 ];
