@@ -40,8 +40,8 @@ export default arrayOfInterests = [
     opacity: 1
   },
   {
-    key: "QUIZES",
-    img: require("../../assets/quiz.jpg"),
+    key: "FILM",
+    img: require("../../assets/film.jpg"),
     opacity: 1
   },
   {

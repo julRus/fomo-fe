@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   ImageBackground
 } from "react-native";
+import MapView from "react-native-maps";
+import Delta from "./Components/Delta";
 
 import * as api from "../api";
 
@@ -15,10 +17,13 @@ export default function Event(props) {
 
   const { id } = props.navigation.state.params;
 
-  api.fetchEventByEventId(id).then(data => {
-    setEventDetails(data.results);
-    setLoading(false);
-  });
+  useEffect(() => {
+    api.fetchEventByEventId(id).then(data => {
+      setEventDetails(data.results);
+      setLoading(false);
+    });
+    console.log(eventDetails);
+  }, []);
 
   if (loading)
     return (
@@ -29,15 +34,11 @@ export default function Event(props) {
   else
     return (
       <View style={styles.container}>
-        {/* <Image
-          style={{ width: 410, height: 10, opacity: 0.7 }}
-          source={{ uri: eventDetails.largeimageurl }}
-          blurRadius={0}
-        ></Image> */}
         <ImageBackground
           style={{
             width: "100%",
-            height: "100%"
+            height: "100%",
+            opacity: 0.7
           }}
           source={{ uri: eventDetails.largeimageurl }}
           blurRadius={2}
@@ -60,6 +61,24 @@ export default function Event(props) {
             {eventDetails.description}
           </Text>
         </ImageBackground>
+        <MapView
+          style={styles.mapStyle}
+          initialRegion={Delta([
+            { latitude: 53.4824, longitude: -2.3406 },
+            { latitude: 54, longitude: -2 },
+            { latitude: 53, longitude: -2 }
+          ])}
+          maxZoomLevel={50}
+        >
+          {/* <MapView.Marker
+            coordinate={{
+              latitude: eventDetails.venue.latitude,
+              longitude: eventDetails.venue.longitude
+            }}
+            title={eventDetails.description}
+            description={new Date(eventDetails.date).toDateString()}
+          /> */}
+        </MapView>
       </View>
     );
 }

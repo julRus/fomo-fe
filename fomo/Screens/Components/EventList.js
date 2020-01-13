@@ -31,9 +31,9 @@ export default function EventList(props) {
     setIsLoading(false);
   });
 
-  function viewMap() {
-    props.navigator("MyMap", { skiddleEvents });
-  }
+  // function viewMap() {
+  //   props.navigator("MyMap", { skiddleEvents });
+  // }
 
   function viewEvent(id) {
     props.navigator("Event", { id });
@@ -47,7 +47,7 @@ export default function EventList(props) {
     );
   return (
     <View>
-      <TouchableOpacity onPress={viewMap}>
+      <TouchableOpacity onPress={null}>
         <Text style={styles.mapButton}>MAP > > ></Text>
       </TouchableOpacity>
       <FlatList
