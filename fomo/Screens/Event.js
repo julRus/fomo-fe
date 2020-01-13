@@ -15,14 +15,10 @@ export default function Event(props) {
 
   const { id } = props.navigation.state.params;
 
-  useEffect(() => {
-    api.fetchEventByEventId(id).then(data => {
-      setEventDetails(data.results);
-      setLoading(false);
-    });
-  }, []);
-
-  // console.log(eventDetails);
+  api.fetchEventByEventId(id).then(data => {
+    setEventDetails(data.results);
+    setLoading(false);
+  });
 
   if (loading)
     return (
@@ -50,10 +46,15 @@ export default function Event(props) {
             style={styles.button}
             onPress={() => console.log("click")}
           >
-            <Text style={styles.text}>Attend</Text>
+            <Text style={styles.buttonText}>Attend</Text>
           </TouchableOpacity>
           <Text style={{ ...styles.date, ...styles.eventText }}>
-            {new Date(eventDetails.date).toDateString()}
+            {new Date(eventDetails.date).toDateString()},{" "}
+            {eventDetails.openingtimes.doorsopen} -
+            {eventDetails.openingtimes.doorsclose}
+          </Text>
+          <Text style={{ ...styles.minAge, ...styles.eventText }}>
+            Age Range: {eventDetails.MinAge}+
           </Text>
           <Text style={{ ...styles.description, ...styles.eventText }}>
             {eventDetails.description}
@@ -84,7 +85,7 @@ const styles = StyleSheet.create({
     top: 20
   },
 
-  text: {
+  buttonText: {
     color: "white",
     fontSize: 20,
     textAlign: "center",
@@ -92,14 +93,18 @@ const styles = StyleSheet.create({
     opacity: 0.9
   },
 
+  date: {
+    marginTop: 60
+  },
+
   eventText: {
     color: "white",
     fontSize: 20,
-    textAlign: "center",
-    margin: 70
+    textAlign: "center"
   },
 
   description: {
+    marginTop: 30,
     fontSize: 30
   }
 });

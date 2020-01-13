@@ -14,24 +14,26 @@ export default function EventList(props) {
   const [skiddleEvents, setSkiddleEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    api.fetchSkiddleEvents().then(data => {
-      const { keywords, ageRange } = props;
-      const { results } = data;
-      const eventsByKeywords = results.filter(event => {
-        if (
-          event.EventCode === keywords[0] ||
-          event.EventCode === keywords[1] ||
-          event.EventCode === keywords[2] ||
-          event.EventCode === keywords[3]
-        ) {
-          return event;
-        }
-      });
-      setSkiddleEvents(eventsByKeywords);
-      setIsLoading(false);
+  api.fetchSkiddleEvents().then(data => {
+    const { keywords, ageRange } = props;
+    const { results } = data;
+    const eventsByKeywords = results.filter(event => {
+      if (
+        event.EventCode === keywords[0] ||
+        event.EventCode === keywords[1] ||
+        event.EventCode === keywords[2] ||
+        event.EventCode === keywords[3]
+      ) {
+        return event;
+      }
     });
+    setSkiddleEvents(eventsByKeywords);
+    setIsLoading(false);
   });
+
+  function viewMap() {
+    props.navigator("MyMap", { skiddleEvents });
+  }
 
   function viewEvent(id) {
     props.navigator("Event", { id });
@@ -45,6 +47,9 @@ export default function EventList(props) {
     );
   return (
     <View>
+      <TouchableOpacity onPress={viewMap}>
+        <Text style={styles.mapButton}>MAP > > ></Text>
+      </TouchableOpacity>
       <FlatList
         data={skiddleEvents}
         renderItem={({ item }) => (
@@ -116,9 +121,20 @@ const styles = StyleSheet.create({
   },
   eventLocation: {
     color: "white",
+    fontSize: 10,
     textAlign: "right",
     right: 135
-  }
+  },
+  mapButton: {
+    color: "lightblue",
+    fontSize: 25,
+    textAlign: "center",
+    alignSelf: "center",
+    width: "99%",
+    borderColor: "lightblue",
+    borderWidth: 1,
+    borderRadius: 5
+  },
   // eventAgeRange: {
   //   color: "white",
   //   fontSize: 20,
@@ -126,8 +142,8 @@ const styles = StyleSheet.create({
   //   backgroundColor: "black",
   //   opacity: 0.7
   // },
-  // eventPrice: {
-  //   color: "white",
-  //   top: 20
-  // }
+  eventPrice: {
+    color: "white",
+    textAlign: "right"
+  }
 });

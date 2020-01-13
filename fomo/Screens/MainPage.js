@@ -1,20 +1,18 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import EventList from "./Components/EventList";
 
 export default function MainPage(props) {
   const { keywords, familyFriendly, navigator } = props.navigation.state.params;
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        {/* <Text style={styles.title}>FOMO</Text> */}
-      </View>
-      <View style={styles.subHeader}>
+      <View style={styles.header}></View>
+      {/* <View style={styles.subHeader}>
         <Text style={styles.settings}>settings</Text>
         <Text style={styles.date}>{new Date().toDateString()}</Text>
-        {/* <Text style={styles.changeLocation}>Change</Text> */}
+        {/* <Text style={styles.changeLocation}>Change</Text> }
         <Text style={styles.location}>Manchester</Text>
-      </View>
+      </View> */}
       {/* <Text style={styles.eventsTitle}>Events</Text> */}
       <EventList
         keywords={keywords}

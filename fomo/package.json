@@ -15,6 +15,8 @@
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
     "react-native-gesture-handler": "^1.5.3",
+    "react-native-maps": "^0.26.1",
+    "react-native-maps-directions": "^1.7.3",
     "react-native-safe-area-context": "^0.6.2",
     "react-native-web": "~0.11.7",
     "react-navigation": "^4.0.10",
@@ -24,5 +26,15 @@
     "babel-preset-expo": "~8.0.0",
     "@babel/core": "^7.0.0"
   },
-  "private": true
+  "private": true,
+  "expo": {
+    "android": {
+      "package": "com.company",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBkG5l0zSr-L_NocMKA4KaBQacBZaJlX_A"
+        }
+      }
+    }
+  }
 }
