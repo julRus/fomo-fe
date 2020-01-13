@@ -6,28 +6,72 @@ import {
   TextInput,
   ImageBackground,
   View,
-  Text
+  Text,
+  TouchableOpacity
 } from "react-native";
-// import { StackNavigator} from "react-navigation"
+import axios from "axios";
 
 export default function SignUpScreen(props) {
-  /*
-    const [enteredUsername, setEnteredUsername] = useState("");
-    const [enteredPassword, setEnteredPassword] = useState("");
-    const [authDetails, setAuthDetails] = useState({
-      username: "",
-      password: ""
-    });
-  */
-  /*
-    this.state = {
-      username: "",
-      email: "",
-      password: "",
-      ageRange: "",
-      gender: ""
-    };
-  */
+  const [enteredUsername, setEnteredUsername] = useState("");
+
+  const [enteredEmail, setEnteredEmail] = useState("");
+
+  const [enteredPassword, setEnteredPassword] = useState("");
+
+  const [enteredConfirmPassword, setEnteredConfirmPassword] = useState("");
+
+  const [enteredLocation, setEnteredLocation] = useState("");
+
+  const [pickedAge, setPickedAge] = useState("");
+
+  const [pickedGender, setPickedGender] = useState("");
+
+  const handleSetUsername = enteredText => {
+    setEnteredUsername(enteredText);
+  };
+
+  const handleSetEmail = enteredText => {
+    setEnteredEmail(enteredText);
+  };
+
+  const handleSetPassword = enteredText => {
+    setEnteredPassword(enteredText);
+  };
+
+  const handleSetConfirmPassword = enteredText => {
+    setEnteredConfirmPassword(enteredText);
+  };
+
+  const handleSetLocation = enteredText => {
+    setEnteredLocation(enteredText);
+  };
+
+  const handleSetPickedAge = enteredText => {
+    setPickedAge(enteredText);
+  };
+
+  const handleSetPickedGender = enteredText => {
+    setPickedGender(enteredText);
+  };
+
+  const submitNewUser = () => {
+    if (enteredPassword !== enteredConfirmPassword) {
+      console.log("Password mismatch");
+    } else {
+      axios
+        .post("https://fomo-api.herokuapp.com/register", {
+          username: enteredUsername,
+          password: enteredPassword,
+          email: enteredEmail,
+          location: enteredLocation,
+          age: pickedAge,
+          gender: pickedGender
+        })
+        .then(res => {
+          console.log(res);
+        });
+    }
+  };
 
   SignUpScreen.navigationOptions = {
     headerStyle: { backgroundColor: "black" },
@@ -52,34 +96,46 @@ export default function SignUpScreen(props) {
             <TextInput
               style={styles.textInput}
               placeholder="Enter your username"
-              // onChangeText={text => this.setState({ username })}
-              // value={this.state.text}
+              value={enteredUsername}
+              onChangeText={handleSetUsername}
             />
             <TextInput
               style={styles.textInput}
               placeholder="Enter your email"
-              // onChangeText={text => this.setState({ email })}
-              // value={this.state.text}
+              value={enteredEmail}
+              onChangeText={handleSetEmail}
             />
             <Text style={styles.subTitle}>Password</Text>
             <TextInput
               style={styles.textInput}
               placeholder="Enter your password"
-              // onChangeText={text => this.setState({ password })}
-              // value={this.state.text}
+              value={enteredPassword}
+              onChangeText={handleSetPassword}
+              secureTextEntry={true}
+            />
+            <TextInput
+              style={styles.textInput}
+              placeholder="Confirm your password"
+              value={enteredConfirmPassword}
+              onChangeText={handleSetConfirmPassword}
+              secureTextEntry={true}
             />
           </View>
           <View style={styles.viewContainer}>
             <Text style={styles.subTitle}>Extra Details</Text>
+            <TextInput
+              style={styles.textInput}
+              placeholder="Choose a location"
+              value={enteredLocation}
+              onChangeText={handleSetLocation}
+            />
             <View style={styles.pickerContainer}>
               <Picker
-                // selectedValue={this.state.ageRange}
+                selectedValue={pickedAge}
                 style={styles.picker}
                 itemStyle={styles.pickerItem}
                 mode="dropdown"
-                onValueChange={itemValue =>
-                  this.setState({ ageRange: itemValue })
-                }
+                onValueChange={handleSetPickedAge}
               >
                 <Picker.Item label="Select your age range" value="" />
                 <Picker.Item label="Under 16 years" value="0-15" />
@@ -91,13 +147,11 @@ export default function SignUpScreen(props) {
             </View>
             <View style={styles.pickerContainer}>
               <Picker
-                // selectedValue={this.state.gender}
+                selectedValue={pickedGender}
                 style={styles.picker}
                 itemStyle={styles.pickerItem}
                 mode="dropdown"
-                onValueChange={itemValue =>
-                  this.setState({ gender: itemValue })
-                }
+                onValueChange={handleSetPickedGender}
               >
                 <Picker.Item label="Select your gender" value="" />
                 <Picker.Item label="Male" value="male" />
@@ -105,6 +159,11 @@ export default function SignUpScreen(props) {
                 <Picker.Item label="Other" value="other" />
               </Picker>
             </View>
+            <TouchableOpacity style={styles.buttonContainer}>
+              <Text style={styles.button} onPress={submitNewUser}>
+                Sign Up
+              </Text>
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </ImageBackground>
@@ -184,5 +243,22 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 6
     // backgroundColor: "orange"
+  },
+
+  buttonContainer: {
+    borderColor: "rgba(196, 73, 7, 0.9)",
+    borderWidth: 2,
+    width: "30%",
+    alignSelf: "center",
+    marginVertical: 10,
+    borderRadius: 5
+  },
+
+  button: {
+    color: "white",
+    paddingHorizontal: 15,
+    paddingVertical: 5,
+    justifyContent: "space-around",
+    textAlign: "center"
   }
 });
