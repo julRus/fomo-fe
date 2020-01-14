@@ -10,8 +10,11 @@ import {
   TouchableOpacity
 } from "react-native";
 import axios from "axios";
+import Quiz from "./Components/Quiz";
 
 export default function SignUpScreen(props) {
+  const [viewModal, setViewModal] = useState(false);
+
   const [enteredUsername, setEnteredUsername] = useState("");
 
   const [enteredEmail, setEnteredEmail] = useState("");
@@ -54,22 +57,28 @@ export default function SignUpScreen(props) {
     setPickedGender(enteredText);
   };
 
+  const setModalView = () => {
+    setViewModal(false);
+  };
+
   const submitNewUser = () => {
     if (enteredPassword !== enteredConfirmPassword) {
       console.log("Password mismatch");
     } else {
-      axios
-        .post("https://fomo-api.herokuapp.com/register", {
-          username: enteredUsername,
-          password: enteredPassword,
-          email: enteredEmail,
-          location: enteredLocation,
-          age: pickedAge,
-          gender: pickedGender
-        })
-        .then(res => {
-          console.log(res);
-        });
+      setViewModal(true);
+      // axios
+      //   .post("https://fomo-api.herokuapp.com/register", {
+      //     username: enteredUsername,
+      //     password: enteredPassword,
+      //     email: enteredEmail,
+      //     location: enteredLocation,
+      //     age: pickedAge,
+      //     gender: pickedGender
+      //   })
+      //   .then(res => {
+      //     console.log(res);
+      //     setViewModal(true);
+      //   });
     }
   };
 
@@ -78,6 +87,8 @@ export default function SignUpScreen(props) {
     headerTitleStyle: { color: "white" },
     headerTintColor: "white"
   };
+
+  const { navigator } = props.navigation.state.params;
 
   return (
     <View>
@@ -88,6 +99,11 @@ export default function SignUpScreen(props) {
         }}
         source={require("../assets/bg.jpg")}
       >
+        <Quiz
+          view={viewModal}
+          navigator={navigator}
+          setModalView={setViewModal}
+        />
         <ScrollView style={styles.scrollView}>
           <View style={styles.viewContainer}>
             <Text style={styles.logo}>FOMO</Text>

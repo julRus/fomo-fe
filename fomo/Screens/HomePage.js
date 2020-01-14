@@ -8,8 +8,6 @@ import {
   Alert
 } from "react-native";
 
-import Quiz from "./Components/Quiz";
-
 export default function HomeScreen(props) {
   const [enteredUsername, setEnteredUsername] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
@@ -17,8 +15,6 @@ export default function HomeScreen(props) {
     username: "",
     password: ""
   });
-
-  const [viewModal, setViewModal] = useState(false);
 
   const handleTextChangeUsername = enteredText => {
     setEnteredUsername(enteredText);
@@ -28,23 +24,22 @@ export default function HomeScreen(props) {
     setEnteredPassword(enteredText);
   };
 
-  const authenticateUser = (bool = true) => {
+  const authenticateUser = () => {
     setAuthDetails({ username: enteredUsername, password: enteredPassword });
     setEnteredUsername(""), setEnteredPassword("");
-    setViewModal(bool);
+    props.navigator("MainPage", {
+      username: enteredUsername,
+      password: enteredPassword,
+      navigator: props.navigator
+    });
   };
 
   const goToSignInPage = () => {
-    props.navigator("SignUp");
+    props.navigator("SignUp", { navigator: props.navigator });
   };
 
   return (
     <View style={StyleSheet.container}>
-      <Quiz
-        view={viewModal}
-        navigator={props.navigator}
-        navigate={authenticateUser}
-      />
       <Text style={styles.logo}>FOMO</Text>
       <Text style={styles.title}>Welcome Back</Text>
       <View style={styles.inputContainer}>
@@ -62,7 +57,7 @@ export default function HomeScreen(props) {
           onChangeText={handleTextChangePassword}
         ></TextInput>
         <TouchableOpacity style={styles.buttonContainer}>
-          <Text style={styles.button} onPress={() => authenticateUser(true)}>
+          <Text style={styles.button} onPress={() => authenticateUser()}>
             Log In
           </Text>
         </TouchableOpacity>
