@@ -27,6 +27,7 @@ export default function Quiz(props) {
   });
 
   function handleInterestPress(item) {
+    console.log("test", props)
     interests.map(interest => {
       if (interest.key === item && interest.opacity === 1 && items.length < 4) {
         items = [...items, item];
@@ -62,12 +63,13 @@ export default function Quiz(props) {
     setFamilyFriendly(ageRange);
     setViewConfirmPage(false);
     setViewFamilyFriendlyPage(false);
-    props.navigate(false);
+    props.setModalView(false);
     props.navigator("MainPage", {
       keywords,
       familyFriendly,
       navigator: props.navigator
     });
+    // this function for final axios post for user creation
   }
 
   return (
